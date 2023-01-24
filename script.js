@@ -13,11 +13,21 @@ let getWeatherByCityName = async (city) => {
     let weather = await response.json();
 
     return weather;
-}
+};
 
 searchInput.addEventListener('keydown', async (e) => {
     if (e.keyCode === 13) {
         let weather = await getWeatherByCityName(searchInput.value);
-        console.log(weather);
+        updateCurrentWeather(weather);
     }
-})
+});
+
+let updateCurrentWeather = (data) => {
+    city.textContent = data.name + ', ' + data.sys.country;
+    day.textContent = dayOfWeek();
+};
+
+let dayOfWeek = () => {
+    return new Date().toLocaleDateString('en-BE', {'weekday': 'long'});
+};
+
