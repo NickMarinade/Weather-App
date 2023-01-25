@@ -3,7 +3,8 @@ let city = document.querySelector('.weatherCity');
 let day = document.querySelector('.weatherDay');
 let image = document.querySelector('.weatherImage');
 let temperature = document.querySelector('.weatherTemperature');
-let forecastDay = document.querySelector('.weatherForecastDay');
+let forecastDay = document.querySelectorAll('.weatherForecastDay');
+let forecastTemperature = document.querySelectorAll('.weatherForecastTemperature');
 
 
 let weatherApiKey = '94a0709f1e11021571d0d86134cebd6d';
@@ -58,12 +59,12 @@ let getForecastByCityId = async (id) => {
 
     forecastList.forEach(day => {
         let date = new Date(day.dt_txt.replace(" ", 'T'));
-        let hours = date.getHours();
+            let hours = date.getHours();
         if (hours === 12) {
             daily.push(day);
         }
     })
-    console.log(daily);
+    console.log(daily)
     return daily;
 };
 
@@ -84,9 +85,20 @@ let updateCurrentWeather = (data) => {
 };
 
 let updateForecast = (data) => {
-   
-};
+   for (let i=0; i<forecastTemperature.length; i++) {
+    forecastTemperature[i].textContent = data[i].main.temp > 0 ? '+' + Math.round(data[i].main.temp) : Math.round(data[i].main.temp);
+   };
 
+   for (let i=0; i<forecastDay.length; i++) {
+
+    let date = new Date(data[i].dt_txt)
+    let formattedDate = date.toLocaleDateString("en-Be", {'weekday': "long"})
+    forecastDay[i].textContent = formattedDate;
+
+    console.log(formattedDate)
+
+   };
+};
 
 let dayOfWeek = () => {
     return new Date().toLocaleDateString('en-BE', {'weekday': 'long'});
