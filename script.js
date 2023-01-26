@@ -16,7 +16,8 @@ let weatherApiKey = '94a0709f1e11021571d0d86134cebd6d';
 let forecastBaseEndpoint = 'https://api.openweathermap.org/data/2.5/forecast?units=metric&appid=' + weatherApiKey;
 let weatherBaseEndpoint = 'https://api.openweathermap.org/data/2.5/weather?units=metric&appid='+ weatherApiKey;
 
-
+let chartDays = [];
+let chartTemperature = [];
 
 let getWeatherByCityName = async (city) => {
     let endpoint = weatherBaseEndpoint + '&q=' + city;
@@ -51,6 +52,7 @@ searchInput.addEventListener('keydown', async (e) => {
         updateCurrentWeather(weather); 
         let forecast = await getForecastByCityId(cityId);
         updateForecast(forecast);
+        console.log(chartDays,chartTemperature)
     }
 });
 
@@ -67,6 +69,7 @@ let updateCurrentWeather = (data) => {
 let updateForecast = (data) => {
    for (let i=0; i<forecastTemperature.length; i++) {
     forecastTemperature[i].textContent = data[i].main.temp > 0 ? '+' + Math.round(data[i].main.temp) : Math.round(data[i].main.temp);
+    chartTemperature.push(forecastTemperature[i].textContent = data[i].main.temp > 0 ? '+' + Math.round(data[i].main.temp) : Math.round(data[i].main.temp))
    };
 
    for (let i=0; i<forecastDay.length; i++) {
@@ -74,6 +77,7 @@ let updateForecast = (data) => {
     let date = new Date(data[i].dt_txt)
     let formattedDate = date.toLocaleDateString("en-Be", {'weekday': "long"})
     forecastDay[i].textContent = formattedDate;
+    chartDays.push(forecastDay[i].textContent = formattedDate);
    };
 
    for (let i=0; i<locationIcons.length; i++) {
