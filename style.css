@@ -95,13 +95,13 @@ body {
 .chart {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
     height: 150px;
-    width: 100%;
+    align-items: center;
 }
 
 canvas {
     width: 100%;
+    margin: 0 auto;
 }
 
 
