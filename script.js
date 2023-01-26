@@ -8,6 +8,7 @@ let forecastTemperature = document.querySelectorAll('.weatherForecastTemperature
 let locationIcon = document.querySelector('.weather-icon');
 let locationIcons = document.querySelectorAll('.weather-icons');
 let unsplash = document.querySelector('.unsplash');
+let chartDiv = document.querySelector('.chart');
 
 
 
@@ -18,6 +19,7 @@ let weatherBaseEndpoint = 'https://api.openweathermap.org/data/2.5/weather?units
 
 let chartDays = [];
 let chartTemperature = [];
+const ctx = document.getElementById('myChart');
 
 let getWeatherByCityName = async (city) => {
     let endpoint = weatherBaseEndpoint + '&q=' + city;
@@ -52,9 +54,60 @@ searchInput.addEventListener('keydown', async (e) => {
         updateCurrentWeather(weather); 
         let forecast = await getForecastByCityId(cityId);
         updateForecast(forecast);
-        console.log(chartDays,chartTemperature)
+
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+              labels: chartDays,
+              datasets: [{
+                backgroundColor: 'white',
+                label: '',
+                data: chartTemperature,
+                fill: false,
+                borderColor: 'red',
+                color: 'white',
+                tension: 0.1
+              }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+              scales: {
+                y: {
+                    ticks:{
+                        color: 'white',
+                    },
+                  beginAtZero: true
+                },
+                x: {
+                    ticks:{
+                        color: 'white',
+                    },
+                }
+              }
+            }
+          });
+
+    } else if (e.keyCode === 8) {
+        chartDays = [];
+        chartTemperature = [];
     }
+
 });
+
+searchInput.addEventListener('click', async () => {
+        chartDays = [];
+        chartTemperature = [];
+});
+
+
+
+
+
 
 let updateCurrentWeather = (data) => {
     city.textContent = data.name + ', ' + data.sys.country;
