@@ -86,7 +86,6 @@ let getForecastByCityId = async (id) => {
 
 searchInput.addEventListener('keydown', async (e) => {
     if (e.keyCode === 13) {
-        // lineChart.reset();
         let weather = await getWeatherByCityName(searchInput.value);
         let cityId = weather.id;
         updateCurrentWeather(weather); 
@@ -96,8 +95,6 @@ searchInput.addEventListener('keydown', async (e) => {
         lineChart.data.datasets[0].data = chartTemperature;
         lineChart.data.labels = chartDays;
         lineChart.update();
-
-        console.log(chartDays, chartTemperature)
     
      } else if (e.keyCode === 8) {
         chartDays = [];
