@@ -21,6 +21,43 @@ let chartDays = [];
 let chartTemperature = [];
 const ctx = document.getElementById('myChart');
 
+let lineChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: [],
+      datasets: [{
+        backgroundColor: 'white',
+        label: '',
+        data: [],
+        fill: false,
+        borderColor: 'red',
+        color: 'white',
+        tension: 0.1
+      }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: {
+                display: false
+            }
+        },
+      scales: {
+        y: {
+            ticks:{
+                color: 'white',
+            },
+          beginAtZero: true
+        },
+        x: {
+            ticks:{
+                color: 'white',
+            },
+        }
+      }
+    }
+  });
+
 let getWeatherByCityName = async (city) => {
     let endpoint = weatherBaseEndpoint + '&q=' + city;
     let response = await fetch(endpoint);
@@ -49,60 +86,30 @@ let getForecastByCityId = async (id) => {
 
 searchInput.addEventListener('keydown', async (e) => {
     if (e.keyCode === 13) {
+        // lineChart.reset();
         let weather = await getWeatherByCityName(searchInput.value);
         let cityId = weather.id;
         updateCurrentWeather(weather); 
         let forecast = await getForecastByCityId(cityId);
         updateForecast(forecast);
 
-        new Chart(ctx, {
-            type: 'line',
-            data: {
-              labels: chartDays,
-              datasets: [{
-                backgroundColor: 'white',
-                label: '',
-                data: chartTemperature,
-                fill: false,
-                borderColor: 'red',
-                color: 'white',
-                tension: 0.1
-              }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        display: false
-                    }
-                },
-              scales: {
-                y: {
-                    ticks:{
-                        color: 'white',
-                    },
-                  beginAtZero: true
-                },
-                x: {
-                    ticks:{
-                        color: 'white',
-                    },
-                }
-              }
-            }
-          });
+        lineChart.data.datasets[0].data = chartTemperature;
+        lineChart.data.labels = chartDays;
+        lineChart.update();
 
-    } else if (e.keyCode === 8) {
+        console.log(chartDays, chartTemperature)
+    
+     } else if (e.keyCode === 8) {
         chartDays = [];
-        chartTemperature = [];
+        chartTemperature = []
     }
 
 });
 
-searchInput.addEventListener('click', async () => {
+searchInput.addEventListener('click', () => {
         chartDays = [];
         chartTemperature = [];
-});
+})
 
 
 
