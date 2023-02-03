@@ -10,17 +10,6 @@ let locationIcons = document.querySelectorAll('.weather-icons');
 let unsplash = document.querySelector('.unsplash');
 let chartDiv = document.querySelector('.chart');
 let hiddenContent = document.querySelectorAll('#hiddenContent');
-
-
-
-
-
-
-
-
-
-
-
 let weatherApiKey = '94a0709f1e11021571d0d86134cebd6d';
 let forecastBaseEndpoint = 'https://api.openweathermap.org/data/2.5/forecast?units=metric&appid=' + weatherApiKey;
 let weatherBaseEndpoint = 'https://api.openweathermap.org/data/2.5/weather?units=metric&appid='+ weatherApiKey;
