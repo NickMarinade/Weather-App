@@ -9,6 +9,14 @@ let locationIcon = document.querySelector('.weather-icon');
 let locationIcons = document.querySelectorAll('.weather-icons');
 let unsplash = document.querySelector('.unsplash');
 let chartDiv = document.querySelector('.chart');
+let hiddenContent = document.querySelectorAll('#hiddenContent');
+
+
+
+
+
+
+
 
 
 
@@ -86,6 +94,11 @@ let getForecastByCityId = async (id) => {
 
 searchInput.addEventListener('keydown', async (e) => {
     if (e.keyCode === 13) {
+
+        for (let i = 0; i < hiddenContent.length; i++) {
+            hiddenContent[i].removeAttribute('id');
+        }
+
         let weather = await getWeatherByCityName(searchInput.value);
         let cityId = weather.id;
         updateCurrentWeather(weather); 
@@ -141,6 +154,7 @@ let updateForecast = (data) => {
     const icon = data[i].weather[0].icon;
     locationIcons[i].innerHTML = `<img src="icons/${icon}.png"></img>`;
    }
+
 };
 
 let dayOfWeek = () => {

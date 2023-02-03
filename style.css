@@ -104,6 +104,10 @@ canvas {
     margin: 0 auto;
 }
 
+#hiddenContent {
+    display:none;
+}
+
 @media only screen and (max-width: 425px){
 	body {
         background-color: white;
